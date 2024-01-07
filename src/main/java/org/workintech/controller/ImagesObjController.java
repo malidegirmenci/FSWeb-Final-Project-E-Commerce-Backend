@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.workintech.entity.ImagesObj;
-import org.workintech.entity.Product;
 import org.workintech.service.ImagesObjService;
 import org.workintech.service.ProductService;
 
@@ -23,11 +22,11 @@ import java.util.Objects;
 public class ImagesObjController {
     private ImagesObjService imagesObjService;
     private ProductService productService;
-    private static final String GET_ALL_PRODUCTS = "https://workintech-fe-ecommerce.onrender.com/products";
+    private static final String GET_ALL_PRODUCTS = "https://workintech-fe-ecommerce.onrender.com/products?limit=586";
     private RestTemplateBuilder restTemplateBuilder;
 
     @PostMapping("/all/images")
-    public List<ImagesObj> saveAll() {
+    public String saveAll() {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<JsonNode> responses = restTemplate.getForEntity(GET_ALL_PRODUCTS, JsonNode.class);
         List<ImagesObj> imagesObjList = new ArrayList<>();
@@ -39,10 +38,10 @@ public class ImagesObjController {
                 ImagesObj imagesObj = new ImagesObj();
                 imagesObj.setUrl(subNode.get("url").asText());
                 imagesObj.setIndex(subNode.get("index").asInt());
-                imagesObj.setProduct(productService.finById(productId));
+                imagesObj.setProduct(productService.finById(productId-1));
                 imagesObjList.add(imagesObjService.save(imagesObj));
             }
         }
-        return imagesObjList;
+        return "All images fetched";
     }
 }

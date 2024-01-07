@@ -26,11 +26,10 @@ public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
     private StoreService storeService;
-    private ImagesObjService imagesObjService;
-    private static final String GET_ALL_PRODUCTS = "https://workintech-fe-ecommerce.onrender.com/products";
+    private static final String GET_ALL_PRODUCTS = "https://workintech-fe-ecommerce.onrender.com/products?limit=587";
     private RestTemplateBuilder restTemplateBuilder;
     @PostMapping("/all")
-    public List<Product> saveAll() {
+    public String saveAll() {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<JsonNode> responses = restTemplate.getForEntity(GET_ALL_PRODUCTS, JsonNode.class);
         List<Product> products = new ArrayList<>();
@@ -49,7 +48,6 @@ public class ProductController {
             Integer stock = node.get("stock") != null ? node.get("stock").asInt() : null;
             Long storeId = node.get("store_id") != null ? node.get("store_id").asLong() : null;
             Long categoryId = node.get("category_id") != null ? node.get("category_id").asLong() : null;
-            //JsonNode imagesNode = node.get("images") != null ? node.get("images") : null;
             product.setId(id);
             product.setName(name);
             product.setDescription(description);
@@ -57,25 +55,12 @@ public class ProductController {
             product.setRating(rating);
             product.setSellCount(sellCount);
             product.setStock(stock);
-            List<ImagesObj> images = new ArrayList<>();
-            /*
-            if(imagesNode != null){
-                for(JsonNode imageNode : imagesNode){
-                    ImagesObj imagesObj = new ImagesObj();
-                    imagesObj.setUrl(imageNode.get("url").asText());
-                    imagesObj.setIndex(imageNode.get("index").asInt());
-                    images.add(imagesObjService.save(imagesObj));
-                }
-            }
-            product.setImages(images);
-
-             */
             product.setCategory(categoryService.findById(categoryId));
             product.setStore(storeService.findById(storeId));
             products.add(product);
         }
-        //"Data transfer completed successfully";
-        return productService.saveAll(products);
+        productService.saveAll(products);
+        return "Data transfer completed successfully";
     }
     @PostMapping("/")
     public ProductResponse save(@RequestBody Product product){
