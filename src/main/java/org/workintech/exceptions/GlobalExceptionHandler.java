@@ -12,14 +12,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleException(EcommerceException ecommerceException){
         ExceptionResponse exceptionResponse = new ExceptionResponse(ecommerceException.getMessage());
-        log.error("Ecommerce exception"+exceptionResponse.getMessage());
+        log.error("Ecommerce exception occurred "+exceptionResponse.getMessage());
         return new ResponseEntity<>(exceptionResponse,ecommerceException.getHttpStatus());
     }
 
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleException(Exception exception){
         ExceptionResponse exceptionResponse = new ExceptionResponse(exception.getMessage());
-        log.error("Ecommerce exception"+exceptionResponse.getMessage());
+        log.error("Exception occurred "+exceptionResponse.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
