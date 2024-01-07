@@ -22,7 +22,7 @@ import java.util.Objects;
 public class ImagesObjController {
     private ImagesObjService imagesObjService;
     private ProductService productService;
-    private static final String GET_ALL_PRODUCTS = "https://workintech-fe-ecommerce.onrender.com/products?limit=586";
+    private static final String GET_ALL_PRODUCTS = "https://workintech-fe-ecommerce.onrender.com/products?limit=587";
     private RestTemplateBuilder restTemplateBuilder;
 
     @PostMapping("/all/images")
