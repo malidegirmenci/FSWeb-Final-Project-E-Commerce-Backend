@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -24,9 +25,6 @@ public class Product {
     @Column(name ="description")
     private String description;
 
-    @Column(name = "img")
-    private String img;
-
     @Column(name = "price")
     private Double price;
 
@@ -39,16 +37,15 @@ public class Product {
     @Column(name = "sell_count")
     private Integer sellCount;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    private List<ImagesObj> images;
 
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name="category_id")
     private Category category;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinTable(name = "product_store", schema = "ecommerce",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "store_id"))
-    private List<Store> storeList;
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinColumn(name="store_id")
+    private Store store;
 
 }
