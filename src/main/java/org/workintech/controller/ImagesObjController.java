@@ -29,17 +29,16 @@ public class ImagesObjController {
     public String saveAll() {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<JsonNode> responses = restTemplate.getForEntity(GET_ALL_PRODUCTS, JsonNode.class);
-        List<ImagesObj> imagesObjList = new ArrayList<>();
-        for(JsonNode node : Objects.requireNonNull(responses.getBody().get("products"))){
+        for (JsonNode node : Objects.requireNonNull(responses.getBody().get("products"))) {
             JsonNode imagesNode = node.get("images") != null ? node.get("images") : null;
             Long productId = node.get("id") != null ? node.get("id").asLong() : null;
             assert imagesNode != null;
-            for(JsonNode subNode : imagesNode){
+            for (JsonNode subNode : imagesNode) {
                 ImagesObj imagesObj = new ImagesObj();
                 imagesObj.setUrl(subNode.get("url").asText());
                 imagesObj.setIndex(subNode.get("index").asInt());
-                imagesObj.setProduct(productService.finById(productId-1));
-                imagesObjList.add(imagesObjService.save(imagesObj));
+                imagesObj.setProduct(productService.finById(productId - 1));
+                imagesObjService.save(imagesObj);
             }
         }
         return "All images fetched";
