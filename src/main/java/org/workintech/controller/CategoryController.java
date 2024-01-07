@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     private CategoryService categoryService;
     private static final String GET_ALL_CATEGORIES = "https://workintech-fe-ecommerce.onrender.com/categories";
@@ -62,4 +62,14 @@ public class CategoryController {
     public List<CategoryResponse> getAll() {
         return categoryService.getAll();
     }
+
+    @PutMapping("/{id}")
+    public CategoryResponse update(@PathVariable Long id, @RequestBody Category category){
+        return categoryService.update(id,category);
+    }
+    @DeleteMapping("/{id}")
+    public CategoryResponse delete(@PathVariable Long id){
+        return categoryService.delete(id);
+    }
+
 }
