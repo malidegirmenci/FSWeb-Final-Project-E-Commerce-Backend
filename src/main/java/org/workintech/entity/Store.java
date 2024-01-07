@@ -30,10 +30,7 @@ public class Store {
     @Column(name = "iban")
     private String iban;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinTable(name = "product_store", schema = "ecommerce",
-            joinColumns = @JoinColumn(name = "store_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> productList;
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "store")
+    private List<Product> products;
+
 }
