@@ -1,9 +1,11 @@
 package org.workintech.converter;
 
 import org.workintech.dto.CategoryResponse;
+import org.workintech.dto.ImagesObjResponse;
 import org.workintech.dto.ProductResponse;
 import org.workintech.dto.StoreResponse;
 import org.workintech.entity.Category;
+import org.workintech.entity.ImagesObj;
 import org.workintech.entity.Product;
 import org.workintech.entity.Store;
 
@@ -39,7 +41,7 @@ public class DtoConverter {
                 product.getId(),
                 product.getName(),
                 product.getDescription(),
-                product.getImages(),
+                DtoConverter.convertToImagesObjResponseList(product.getImages()),
                 product.getPrice(),
                 product.getRating(),
                 product.getStock(),
@@ -55,7 +57,7 @@ public class DtoConverter {
                 product.getId(),
                 product.getName(),
                 product.getDescription(),
-                product.getImages(),
+                DtoConverter.convertToImagesObjResponseList(product.getImages()),
                 product.getPrice(),
                 product.getRating(),
                 product.getStock(),
@@ -85,5 +87,16 @@ public class DtoConverter {
                 store.getIban()
         )));
         return responses;
+    }
+
+    public static List<ImagesObjResponse> convertToImagesObjResponseList(List<ImagesObj> imagesObjs){
+        List<ImagesObjResponse> responses = new ArrayList<>();
+        imagesObjs.forEach(imagesObj -> responses.add(new ImagesObjResponse(
+                imagesObj.getUrl(),imagesObj.getIndex()
+        )));
+        return responses;
+    }
+    public static ImagesObjResponse convertToImagesObjResponse(ImagesObj imagesObj){
+        return new ImagesObjResponse(imagesObj.getUrl(), imagesObj.getIndex());
     }
 }
