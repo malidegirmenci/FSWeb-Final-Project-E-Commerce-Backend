@@ -1,6 +1,7 @@
 package org.workintech.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.workintech.converter.DtoConverter;
@@ -14,16 +15,16 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
     public Product finById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
-        if(productOptional.isPresent()){
+        if (productOptional.isPresent()) {
             return productOptional.get();
         }
-        throw new EcommerceException("The product with given id does not exist. ID: "+id, HttpStatus.NOT_FOUND);
+        throw new EcommerceException("The product with given id does not exist. ID: " + id, HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -62,7 +63,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductResponse> getAll() {
-        return DtoConverter.convertToProductResponseList(productRepository.findAll());
+    public List<ProductResponse> getAllWithParams(Integer category, String filter, String sort, Pageable pageable) {
+        return DtoConverter.convertToProductResponseList(productRepository.findAllBy(category, filter, sort, pageable));
     }
+
+    @Override
+    public List<ProductResponse> countAllWithParams(Integer category, String filter, String sort) {
+        return DtoConverter.convertToProductResponseList(productRepository.countFindAllBy(category, filter, sort));
+    }
+
 }
