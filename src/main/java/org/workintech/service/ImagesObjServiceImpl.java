@@ -9,11 +9,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class ImagesObjServiceImpl implements ImagesObjService{
+public class ImagesObjServiceImpl implements ImagesObjService {
     private ImagesObjRepository imagesObjRepository;
-    public ImagesObj save(ImagesObj imagesObj){
+
+    public ImagesObj save(ImagesObj imagesObj) {
         return imagesObjRepository.save(imagesObj);
     }
 
-    public List<ImagesObj> saveAll(List<ImagesObj> imagesObjs){return  imagesObjRepository.saveAll(imagesObjs);}
+    public List<ImagesObj> saveAll(List<ImagesObj> imagesObjs) {
+        return imagesObjRepository.saveAll(imagesObjs);
+    }
 }
