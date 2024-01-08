@@ -4,10 +4,13 @@ import org.workintech.dto.CategoryResponse;
 import org.workintech.dto.ImagesObjResponse;
 import org.workintech.dto.ProductResponse;
 import org.workintech.dto.StoreResponse;
+import org.workintech.dto.user.LoginUserResponse;
+import org.workintech.dto.user.RegisterUserResponse;
 import org.workintech.entity.Category;
 import org.workintech.entity.ImagesObj;
 import org.workintech.entity.Product;
 import org.workintech.entity.Store;
+import org.workintech.entity.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,5 +101,13 @@ public class DtoConverter {
     }
     public static ImagesObjResponse convertToImagesObjResponse(ImagesObj imagesObj){
         return new ImagesObjResponse(imagesObj.getUrl(), imagesObj.getIndex());
+    }
+
+    public static RegisterUserResponse convertToRegisterUserResponse(String message){
+        return new RegisterUserResponse(message);
+    }
+
+    public static LoginUserResponse convertToLoginUserResponse(User user,String roleId){
+        return new LoginUserResponse(user.getEmail(), user.getName(), roleId);
     }
 }
