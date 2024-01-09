@@ -48,7 +48,7 @@ public class CategoryController {
         return "Data transfer completed successfully";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public CategoryResponse save(@RequestBody Category category) {
         return categoryService.save(category);
     }
@@ -58,7 +58,7 @@ public class CategoryController {
         return categoryService.getById(id);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<CategoryResponse> getAll() {
         return categoryService.getAll();
     }
