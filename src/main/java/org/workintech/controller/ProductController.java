@@ -1,6 +1,8 @@
 package org.workintech.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.PageRequest;
@@ -35,17 +37,17 @@ public class ProductController {
         ResponseEntity<JsonNode> responses = restTemplate.getForEntity(GET_ALL_PRODUCTS, JsonNode.class);
         List<Product> products = new ArrayList<>();
 
-        for (JsonNode node : Objects.requireNonNull(responses.getBody().get("products"))) {
+        for (JsonNode node : Objects.requireNonNull(Objects.requireNonNull(responses.getBody()).get("products"))) {
             Product product = new Product();
-            Long id = node.get("id") != null ? node.get("id").asLong() : null;
-            String name = node.get("name") != null ? node.get("name").asText() : null;
-            String description = node.get("description") != null ? node.get("description").asText() : null;
-            Double price = node.get("price") != null ? node.get("price").asDouble() : null;
-            Double rating = node.get("rating") != null ? node.get("rating").asDouble() : null;
-            Integer sellCount = node.get("sell_count") != null ? node.get("sell_count").asInt() : null;
-            Integer stock = node.get("stock") != null ? node.get("stock").asInt() : null;
-            Long storeId = node.get("store_id") != null ? node.get("store_id").asLong() : null;
-            Long categoryId = node.get("category_id") != null ? node.get("category_id").asLong() : null;
+            Long id = node.get("id").asLong();
+            String name = node.get("name").asText();
+            String description = node.get("description").asText();
+            Double price = node.get("price").asDouble();
+            Double rating = node.get("rating").asDouble();
+            Integer sellCount = node.get("sell_count").asInt();
+            Integer stock = node.get("stock").asInt();
+            Long storeId = node.get("store_id").asLong();
+            Long categoryId = node.get("category_id").asLong();
             product.setId(id);
             product.setName(name);
             product.setDescription(description);
@@ -62,7 +64,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductResponse save(@RequestBody Product product) {
+    public ProductResponse save(@Valid @RequestBody Product product) {
         return productService.save(product);
     }
 
@@ -80,17 +82,17 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductResponse getById(@PathVariable Long id) {
+    public ProductResponse getById(@Positive @PathVariable Long id) {
         return productService.getById(id);
     }
 
     @PutMapping("/{id}")
-    public ProductResponse update(@PathVariable Long id, @RequestBody Product product) {
+    public ProductResponse update(@Positive @PathVariable Long id,@Valid @RequestBody Product product) {
         return productService.update(id, product);
     }
 
     @DeleteMapping("/{id}")
-    public ProductResponse delete(@PathVariable Long id) {
+    public ProductResponse delete(@Positive @PathVariable Long id) {
         return productService.delete(id);
     }
 
