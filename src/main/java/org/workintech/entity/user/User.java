@@ -29,13 +29,13 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @NotBlank(message = "Name must not be null, empty or blank")
-    @Size(min = 5,max = 75,message = "Name must not be less than 5 and greater than 75 characters.")
+    @NotBlank(message = "Email must not be null, empty or blank")
+    @Size(min = 5,max = 75,message = "Email must not be less than 5 and greater than 75 characters.")
     @Column(name = "email")
     private String email;
 
-    @NotBlank(message = "Name must not be null, empty or blank")
-    @Size(min = 8,max = 100,message = "Name must not be less than 8 and greater than 100 characters.")
+    @NotBlank(message = "Password must not be null, empty or blank")
+    @Size(min = 8,max = 100,message = "Password must not be less than 8 and greater than 100 characters.")
     @Column(name = "password")
     private String password;
 
