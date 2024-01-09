@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.workintech.converter.DtoConverter;
+import org.workintech.dto.user.LoginUserResponse;
 import org.workintech.entity.user.Role;
 import org.workintech.entity.user.User;
 import org.workintech.exceptions.EcommerceException;
@@ -13,6 +15,8 @@ import org.workintech.repository.user.UserRepository;
 
 import java.util.Optional;
 import java.util.Set;
+
+import static org.workintech.utils.Helper.generateDummyToken;
 
 @AllArgsConstructor
 @Service
@@ -35,4 +39,18 @@ public class UserService implements UserDetailsService {
         throw new EcommerceException("The given email does not exist", HttpStatus.BAD_REQUEST);
     }
 
+    public LoginUserResponse findByToken(String token){
+        Optional<User> userOptional = userRepository.findUserByToken(token);
+        if(userOptional.isPresent()){
+            return DtoConverter.convertToLoginUserResponse(userOptional.get(),userOptional.get().getRoles().stream().findFirst().get().getId().toString(),userOptional.get().getToken());
+        }
+        throw new EcommerceException("The given token is wrong. So the user could not verify",HttpStatus.UNAUTHORIZED);
+    }
+    public String setUserToken(String email){
+        User foundedUser = findByEmail(email);
+        String generatedToken = generateDummyToken(foundedUser.getEmail());
+        foundedUser.setToken(generatedToken);
+        userRepository.save(foundedUser);
+        return generatedToken;
+    }
 }
