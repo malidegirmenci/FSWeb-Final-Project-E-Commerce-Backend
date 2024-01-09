@@ -1,4 +1,6 @@
 package org.workintech.dto.user;
 
-public record RegisterUserResponse(String message) {
+import jakarta.validation.constraints.NotBlank;
+
+public record RegisterUserResponse(@NotBlank(message = "Message must not be null, empty or blank")String message) {
 }

@@ -1,4 +1,8 @@
 package org.workintech.dto.user;
 
-public record LoginUserRequest(String email, String password) {
+import jakarta.validation.constraints.NotBlank;
+
+public record LoginUserRequest(
+        @NotBlank(message = "Email must not be null, empty or blank") String email,
+        @NotBlank(message = "Password must not be null, empty or blank") String password) {
 }
