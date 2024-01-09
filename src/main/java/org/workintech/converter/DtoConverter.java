@@ -109,8 +109,8 @@ public class DtoConverter {
         return new RegisterUserResponse(message);
     }
 
-    public static LoginUserResponse convertToLoginUserResponse(User user,String roleId){
-        return new LoginUserResponse(user.getEmail(), user.getName(), roleId);
+    public static LoginUserResponse convertToLoginUserResponse(User user,String roleId,String token){
+        return new LoginUserResponse(user.getEmail(), user.getName(), roleId, token);
     }
 
     public static List<RoleResponse> convertToRoleResponseList(List<Role> roles){
