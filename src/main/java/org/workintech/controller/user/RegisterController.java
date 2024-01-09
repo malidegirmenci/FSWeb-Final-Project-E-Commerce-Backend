@@ -1,5 +1,6 @@
 package org.workintech.controller.user;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ public class RegisterController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public RegisterUserResponse register(@RequestBody RegisterUserRequest registerUserRequest){
+    public RegisterUserResponse register(@Valid @RequestBody RegisterUserRequest registerUserRequest){
         authenticationService
                 .register(registerUserRequest.name(), registerUserRequest.email(), registerUserRequest.password(), registerUserRequest.role_id());
         return DtoConverter.convertToRegisterUserResponse("The user has been registered");
