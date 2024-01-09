@@ -18,7 +18,7 @@ public class RegisterController {
     @PostMapping
     public RegisterUserResponse register(@RequestBody RegisterUserRequest registerUserRequest){
         authenticationService
-                .register(registerUserRequest.name(), registerUserRequest.email(), registerUserRequest.password(), registerUserRequest.roleId());
+                .register(registerUserRequest.name(), registerUserRequest.email(), registerUserRequest.password(), registerUserRequest.role_id());
         return DtoConverter.convertToRegisterUserResponse("The user has been registered");
     }
 }
