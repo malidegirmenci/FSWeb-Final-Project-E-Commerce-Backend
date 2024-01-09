@@ -51,6 +51,8 @@ public class SecurityConfig {
                     auth.requestMatchers("/roles/**").permitAll();
                     auth.requestMatchers("/signup/**").permitAll();
                     auth.requestMatchers("/login/**").permitAll();
+                    auth.requestMatchers("/address/**").permitAll();
+                    auth.requestMatchers("/verify/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
