@@ -6,10 +6,12 @@ import org.workintech.dto.ProductResponse;
 import org.workintech.dto.StoreResponse;
 import org.workintech.dto.user.LoginUserResponse;
 import org.workintech.dto.user.RegisterUserResponse;
+import org.workintech.dto.user.RoleResponse;
 import org.workintech.entity.Category;
 import org.workintech.entity.ImagesObj;
 import org.workintech.entity.Product;
 import org.workintech.entity.Store;
+import org.workintech.entity.user.Role;
 import org.workintech.entity.user.User;
 
 import java.util.ArrayList;
@@ -109,5 +111,13 @@ public class DtoConverter {
 
     public static LoginUserResponse convertToLoginUserResponse(User user,String roleId){
         return new LoginUserResponse(user.getEmail(), user.getName(), roleId);
+    }
+
+    public static List<RoleResponse> convertToRoleResponseList(List<Role> roles){
+        List<RoleResponse> responses = new ArrayList<>();
+        roles.forEach(role -> responses.add(new RoleResponse(
+                role.getId(),role.getName(),role.getCode()
+        )));
+        return responses;
     }
 }
