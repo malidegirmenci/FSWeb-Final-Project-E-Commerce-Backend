@@ -1,5 +1,6 @@
 package org.workintech.controller.user;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import org.workintech.service.user.UserService;
 public class VerifyController {
     private UserService userService;
     @GetMapping("/{token}")
-    public LoginUserResponse verify(@PathVariable String token ) {
+    public LoginUserResponse verify(@Valid @PathVariable String token ) {
         return userService.findByToken(token);
     }
 }

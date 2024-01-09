@@ -1,6 +1,8 @@
 package org.workintech.controller;
 
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -49,12 +51,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public CategoryResponse save(@RequestBody Category category) {
+    public CategoryResponse save(@Valid @RequestBody Category category) {
         return categoryService.save(category);
     }
 
     @GetMapping("/{id}")
-    public CategoryResponse getById(@PathVariable Long id) {
+    public CategoryResponse getById(@Positive @PathVariable Long id) {
         return categoryService.getById(id);
     }
 
@@ -64,11 +66,11 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public CategoryResponse update(@PathVariable Long id, @RequestBody Category category){
+    public CategoryResponse update(@Positive @PathVariable Long id,@Valid @RequestBody Category category){
         return categoryService.update(id,category);
     }
     @DeleteMapping("/{id}")
-    public CategoryResponse delete(@PathVariable Long id){
+    public CategoryResponse delete(@Positive @PathVariable Long id){
         return categoryService.delete(id);
     }
 
