@@ -1,5 +1,6 @@
 package org.workintech.controller.user;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +20,6 @@ import org.workintech.entity.user.User;
 import org.workintech.exceptions.EcommerceException;
 import org.workintech.service.user.UserService;
 
-import static org.workintech.utils.Helper.generateDummyToken;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("/login")
@@ -30,21 +29,20 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public LoginUserResponse login(@RequestBody LoginUserRequest loginUserRequest) {
+    public LoginUserResponse login(@Valid @RequestBody LoginUserRequest loginUserRequest) {
         String username = loginUserRequest.email();
         String password = loginUserRequest.password();
         try {
             UserDetails userDetails = userService.loadUserByUsername(username);
             User user = userService.findByEmail(username);
             Role userRole = user.getRoles().stream().findFirst().get();
-            String token = generateDummyToken();
             if (passwordEncoder.matches(password, userDetails.getPassword())) {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-                return DtoConverter.convertToLoginUserResponse(user,userRole.getId().toString(),token);
+                return DtoConverter.convertToLoginUserResponse(user,userRole.getId().toString(),userService.setUserToken(username));
             }
         } catch (AuthenticationException e) {
-            throw new EcommerceException("The user could not login",HttpStatus.UNAUTHORIZED);
+            throw new EcommerceException("The user could not login",HttpStatus.BAD_REQUEST);
         }
-        throw new EcommerceException("The user could not login",HttpStatus.UNAUTHORIZED);
+        throw new EcommerceException("The user could not login",HttpStatus.BAD_REQUEST);
     }
 }
