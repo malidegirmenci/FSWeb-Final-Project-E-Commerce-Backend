@@ -31,11 +31,20 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "token")
+    private String token;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",schema = "ecommerce",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name ="role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_address",schema = "ecommerce",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name ="address_id"))
+    private Set<Address> addresses = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
