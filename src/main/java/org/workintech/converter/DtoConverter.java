@@ -4,6 +4,7 @@ import org.workintech.dto.CategoryResponse;
 import org.workintech.dto.ImagesObjResponse;
 import org.workintech.dto.ProductResponse;
 import org.workintech.dto.StoreResponse;
+import org.workintech.dto.user.AddressResponse;
 import org.workintech.dto.user.LoginUserResponse;
 import org.workintech.dto.user.RegisterUserResponse;
 import org.workintech.dto.user.RoleResponse;
@@ -11,6 +12,7 @@ import org.workintech.entity.Category;
 import org.workintech.entity.ImagesObj;
 import org.workintech.entity.Product;
 import org.workintech.entity.Store;
+import org.workintech.entity.user.Address;
 import org.workintech.entity.user.Role;
 import org.workintech.entity.user.User;
 
@@ -72,7 +74,8 @@ public class DtoConverter {
         )));
         return responses;
     }
-    public static StoreResponse convertToStoreResponse(Store store){
+
+    public static StoreResponse convertToStoreResponse(Store store) {
         return new StoreResponse(
                 store.getId(),
                 store.getName(),
@@ -82,7 +85,7 @@ public class DtoConverter {
         );
     }
 
-    public static List<StoreResponse> convertToStoreResponseList(List<Store> stores){
+    public static List<StoreResponse> convertToStoreResponseList(List<Store> stores) {
         List<StoreResponse> responses = new ArrayList<>();
         stores.forEach(store -> responses.add(new StoreResponse(
                 store.getId(),
@@ -94,30 +97,60 @@ public class DtoConverter {
         return responses;
     }
 
-    public static List<ImagesObjResponse> convertToImagesObjResponseList(List<ImagesObj> imagesObjs){
+    public static List<ImagesObjResponse> convertToImagesObjResponseList(List<ImagesObj> imagesObjs) {
         List<ImagesObjResponse> responses = new ArrayList<>();
         imagesObjs.forEach(imagesObj -> responses.add(new ImagesObjResponse(
-                imagesObj.getUrl(),imagesObj.getIndex()
+                imagesObj.getUrl(), imagesObj.getIndex()
         )));
         return responses;
     }
-    public static ImagesObjResponse convertToImagesObjResponse(ImagesObj imagesObj){
+
+    public static ImagesObjResponse convertToImagesObjResponse(ImagesObj imagesObj) {
         return new ImagesObjResponse(imagesObj.getUrl(), imagesObj.getIndex());
     }
 
-    public static RegisterUserResponse convertToRegisterUserResponse(String message){
+    public static RegisterUserResponse convertToRegisterUserResponse(String message) {
         return new RegisterUserResponse(message);
     }
 
-    public static LoginUserResponse convertToLoginUserResponse(User user,String roleId,String token){
+    public static LoginUserResponse convertToLoginUserResponse(User user, String roleId, String token) {
         return new LoginUserResponse(user.getEmail(), user.getName(), roleId, token);
     }
 
-    public static List<RoleResponse> convertToRoleResponseList(List<Role> roles){
+    public static List<RoleResponse> convertToRoleResponseList(List<Role> roles) {
         List<RoleResponse> responses = new ArrayList<>();
         roles.forEach(role -> responses.add(new RoleResponse(
-                role.getId(),role.getName(),role.getCode()
+                role.getId(), role.getName(), role.getCode()
+        )));
+        return responses;
+    }
+
+    public static AddressResponse convertToAddressResponse(Address address) {
+        return new AddressResponse(
+                address.getAddressTitle(),
+                address.getName(),
+                address.getSurname(),
+                address.getPhone(),
+                address.getCity(),
+                address.getDistrict(),
+                address.getNeighborhood(),
+                address.getAddressDetail()
+        );
+    }
+
+    public static List<AddressResponse> convertToAddressResponseList(List<Address> addresses) {
+        List<AddressResponse> responses = new ArrayList<>();
+        addresses.forEach(address -> responses.add(new AddressResponse(
+                address.getAddressTitle(),
+                address.getName(),
+                address.getSurname(),
+                address.getPhone(),
+                address.getCity(),
+                address.getDistrict(),
+                address.getNeighborhood(),
+                address.getAddressDetail()
         )));
         return responses;
     }
 }
+
