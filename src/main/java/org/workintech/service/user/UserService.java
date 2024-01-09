@@ -13,6 +13,7 @@ import org.workintech.entity.user.User;
 import org.workintech.exceptions.EcommerceException;
 import org.workintech.repository.user.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -52,5 +53,26 @@ public class UserService implements UserDetailsService {
         foundedUser.setToken(generatedToken);
         userRepository.save(foundedUser);
         return generatedToken;
+    }
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public User findById(long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            return optionalUser.get();
+        }
+        throw new EcommerceException("User is not found with id: " + id, HttpStatus.NOT_FOUND);
+    }
+
+
+    public User delete(long id) {
+        User user = findById(id);
+        if(user != null){
+            userRepository.delete(user);
+            return user;
+        }
+        throw new EcommerceException("User is not found with id: " + id, HttpStatus.NOT_FOUND);
     }
 }
