@@ -29,10 +29,9 @@ public class ImagesObjController {
     public String saveAll() {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<JsonNode> responses = restTemplate.getForEntity(GET_ALL_PRODUCTS, JsonNode.class);
-        for (JsonNode node : Objects.requireNonNull(responses.getBody().get("products"))) {
-            JsonNode imagesNode = node.get("images") != null ? node.get("images") : null;
-            Long productId = node.get("id") != null ? node.get("id").asLong() : null;
-            assert imagesNode != null;
+        for (JsonNode node : Objects.requireNonNull(Objects.requireNonNull(responses.getBody()).get("products"))) {
+            JsonNode imagesNode = node.get("images");
+            long productId = node.get("id").asLong();
             for (JsonNode subNode : imagesNode) {
                 ImagesObj imagesObj = new ImagesObj();
                 imagesObj.setUrl(subNode.get("url").asText());
