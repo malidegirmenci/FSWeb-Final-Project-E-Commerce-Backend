@@ -1,6 +1,8 @@
 package org.workintech.entity.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +24,22 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank(message = "Name must not be null, empty or blank")
+    @Size(min = 3,max = 35,message = "Name must not be less than 3 and greater than 35 characters.")
     @Column(name = "name")
     private String name;
 
+    @NotBlank(message = "Name must not be null, empty or blank")
+    @Size(min = 5,max = 75,message = "Name must not be less than 5 and greater than 75 characters.")
     @Column(name = "email")
     private String email;
 
+    @NotBlank(message = "Name must not be null, empty or blank")
+    @Size(min = 8,max = 100,message = "Name must not be less than 8 and greater than 100 characters.")
     @Column(name = "password")
     private String password;
 
+    @Size(min = 2,max = 100,message = "Address detail must not be less than 2 and greater than 200 characters.")
     @Column(name = "token")
     private String token;
 
