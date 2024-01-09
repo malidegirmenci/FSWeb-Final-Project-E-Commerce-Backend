@@ -3,6 +3,7 @@ package org.workintech.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -46,13 +47,27 @@ public class SecurityConfig {
         httpSecurity.cors().configurationSource(corsConfigurationSource());
         return httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/products/**").permitAll();
-                    auth.requestMatchers("/categories/**").permitAll();
-                    auth.requestMatchers("/roles/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET,"/products/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/product/**").hasAnyAuthority("admin","store");
+                    auth.requestMatchers(HttpMethod.PUT, "/product/**").hasAnyAuthority("admin","store");
+                    auth.requestMatchers(HttpMethod.DELETE, "/product/**").hasAnyAuthority("admin","store");
+
+                    auth.requestMatchers(HttpMethod.GET,"/categories/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/categories/**").hasAnyAuthority("admin");
+                    auth.requestMatchers(HttpMethod.PUT, "/categories/**").hasAnyAuthority("admin");
+                    auth.requestMatchers(HttpMethod.DELETE, "/categories/**").hasAnyAuthority("admin");
+
+                    auth.requestMatchers(HttpMethod.GET,"/roles/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/roles/**").hasAnyAuthority("admin");
+                    auth.requestMatchers(HttpMethod.PUT, "/roles/**").hasAnyAuthority("admin");
+                    auth.requestMatchers(HttpMethod.DELETE, "/roles/**").hasAnyAuthority("admin");
+
+                    auth.requestMatchers("/address/**").permitAll();
+
                     auth.requestMatchers("/signup/**").permitAll();
                     auth.requestMatchers("/login/**").permitAll();
-                    auth.requestMatchers("/address/**").permitAll();
                     auth.requestMatchers("/verify/**").permitAll();
+                    auth.requestMatchers("/user/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
