@@ -113,8 +113,8 @@ public class DtoConverter {
         return new RegisterUserResponse(message);
     }
 
-    public static LoginUserResponse convertToLoginUserResponse(User user, String roleId, String token) {
-        return new LoginUserResponse(user.getEmail(), user.getName(), roleId, token);
+    public static LoginUserResponse convertToLoginUserResponse(User user) {
+        return new LoginUserResponse(user.getEmail(), user.getName(), user.getRoles().stream().findFirst().orElseThrow().getId().toString(), user.getToken());
     }
 
     public static List<RoleResponse> convertToRoleResponseList(List<Role> roles) {
