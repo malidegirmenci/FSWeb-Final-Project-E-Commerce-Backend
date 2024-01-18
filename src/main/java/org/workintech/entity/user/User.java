@@ -54,6 +54,12 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name ="address_id"))
     private Set<Address> addresses = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_payment",schema = "ecommerce",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name ="payment_id"))
+    private Set<Payment> payments = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
