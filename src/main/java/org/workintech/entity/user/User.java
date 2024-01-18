@@ -39,7 +39,6 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Size(min = 2,max = 100,message = "Address detail must not be less than 2 and greater than 200 characters.")
     @Column(name = "token")
     private String token;
 
