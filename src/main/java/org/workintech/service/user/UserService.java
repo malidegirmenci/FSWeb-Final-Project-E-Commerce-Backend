@@ -40,10 +40,10 @@ public class UserService implements UserDetailsService {
         throw new EcommerceException("The given email does not exist", HttpStatus.BAD_REQUEST);
     }
 
-    public LoginUserResponse findByToken(String token){
+    public User findByToken(String token){
         Optional<User> userOptional = userRepository.findUserByToken(token);
         if(userOptional.isPresent()){
-            return DtoConverter.convertToLoginUserResponse(userOptional.get(),userOptional.get().getRoles().stream().findFirst().get().getId().toString(),userOptional.get().getToken());
+            return userOptional.get();
         }
         throw new EcommerceException("The given token is wrong. So the user could not verify",HttpStatus.UNAUTHORIZED);
     }
