@@ -19,6 +19,7 @@ import java.util.Optional;
 public class AddressServiceImpl implements AddressService {
     private AddressRepository addressRepository;
     private UserRepository userRepository;
+
     @Override
     public Address findById(Long id) {
         Optional<Address> optionalAddress = addressRepository.findById(id);
@@ -29,8 +30,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResponse save(Address address) {
-        Optional<User> optionalUser = userRepository.findUserByToken(address.getToken());
+    public AddressResponse save(Address address, String token) {
+        Optional<User> optionalUser = userRepository.findUserByToken(token);
         if(optionalUser.isPresent()){
             optionalUser.get().getAddresses().add(address);
             return DtoConverter.convertToAddressResponse(addressRepository.save(address));
@@ -65,11 +66,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<AddressResponse> getAll(String token) {
-        Optional<User> optionalUser = userRepository.findUserByToken(token);
-        if(optionalUser.isPresent()){
-            return DtoConverter.convertToAddressResponseList(optionalUser.get().getAddresses().stream().toList());
-        }
-        throw new EcommerceException("The given token is wrong. So the addresses could not be fetched.",HttpStatus.UNAUTHORIZED);
+    public List<AddressResponse> getAll() {
+        return DtoConverter.convertToAddressResponseList(addressRepository.findAll());
+    }
+
+    @Override
+    public List<AddressResponse> getByUserToken(String token) {
+        Optional<User> user = userRepository.findUserByToken(token);
+        return DtoConverter.convertToAddressResponseList(user.orElseThrow().getAddresses().stream().toList());
     }
 }
