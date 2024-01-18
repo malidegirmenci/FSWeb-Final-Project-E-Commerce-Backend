@@ -59,9 +59,4 @@ public class Address {
     @Column(name = "address_detail")
     private String addressDetail;
 
-    @NotBlank(message = "Address detail must not be null, empty or blank")
-    @Size(min = 2,max = 100,message = "Address detail must not be less than 2 and greater than 200 characters.")
-    @Column(name = "token")
-    private String token;
-
 }
