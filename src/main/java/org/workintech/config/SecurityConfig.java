@@ -107,7 +107,8 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.PUT, "/roles/**").hasRole("admin");
                     auth.requestMatchers(HttpMethod.DELETE, "/roles/**").hasRole("admin");
 
-                    auth.requestMatchers(HttpMethod.GET,"/address/**").hasAnyRole("admin","store","customer");
+                    auth.requestMatchers("/address/**").hasAnyRole("admin","store","customer");
+                    auth.requestMatchers("/payment/**").hasAnyRole("admin","store","customer");
 
                     auth.requestMatchers("/signup/**").permitAll();
                     auth.requestMatchers("/login/**").permitAll();
