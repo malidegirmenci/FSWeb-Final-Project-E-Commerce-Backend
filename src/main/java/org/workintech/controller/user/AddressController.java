@@ -18,15 +18,15 @@ import java.util.List;
 public class AddressController {
     private AddressService addressService;
 
-    @PostMapping
+    @PostMapping("/{token}")
     @ResponseStatus(HttpStatus.CREATED)
-    public AddressResponse save(@Validated @RequestBody Address address){
-        return addressService.save(address);
+    public AddressResponse save(@Validated @RequestBody Address address,@NotBlank @PathVariable String token) {
+        return addressService.save(address, token);
     }
 
     @GetMapping("/{token}")
-    public List<AddressResponse> getAll(@NotBlank @PathVariable String token){
-        return addressService.getAll(token);
+    public List<AddressResponse> getAll(@NotBlank @PathVariable String token) {
+        return addressService.getByUserToken(token);
     }
 
 }
