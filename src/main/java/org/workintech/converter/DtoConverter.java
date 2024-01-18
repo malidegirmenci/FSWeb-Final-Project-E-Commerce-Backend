@@ -4,15 +4,13 @@ import org.workintech.dto.CategoryResponse;
 import org.workintech.dto.ImagesObjResponse;
 import org.workintech.dto.ProductResponse;
 import org.workintech.dto.StoreResponse;
-import org.workintech.dto.user.AddressResponse;
-import org.workintech.dto.user.LoginUserResponse;
-import org.workintech.dto.user.RegisterUserResponse;
-import org.workintech.dto.user.RoleResponse;
+import org.workintech.dto.user.*;
 import org.workintech.entity.Category;
 import org.workintech.entity.ImagesObj;
 import org.workintech.entity.Product;
 import org.workintech.entity.Store;
 import org.workintech.entity.user.Address;
+import org.workintech.entity.user.Payment;
 import org.workintech.entity.user.Role;
 import org.workintech.entity.user.User;
 
@@ -149,6 +147,22 @@ public class DtoConverter {
                 address.getDistrict(),
                 address.getNeighborhood(),
                 address.getAddressDetail()
+        )));
+        return responses;
+    }
+
+    public static PaymentResponse convertToPaymentResponse(Payment payment){
+        return new PaymentResponse(payment.getNumber(), payment.getName(), payment.getExpiryMonth(), payment.getExpiryYear(), payment.getCvc());
+    }
+
+    public static List<PaymentResponse> convertToPaymentResponseList(List<Payment> payments){
+        List<PaymentResponse> responses = new ArrayList<>();
+        payments.forEach(payment -> responses.add(new PaymentResponse(
+                payment.getNumber(),
+                payment.getName(),
+                payment.getExpiryMonth(),
+                payment.getExpiryYear(),
+                payment.getCvc()
         )));
         return responses;
     }
