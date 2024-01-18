@@ -7,10 +7,11 @@ import java.util.List;
 
 public interface AddressService {
     Address findById(Long id);
-    AddressResponse save(Address address);
+    AddressResponse save(Address address, String token);
     AddressResponse delete(Long id);
     AddressResponse update(Long id, Address address);
     AddressResponse getById(Long id);
-    List<AddressResponse> getAll(String token);
+    List<AddressResponse> getAll();
+    List<AddressResponse> getByUserToken(String token);
 
 }
