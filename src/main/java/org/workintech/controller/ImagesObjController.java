@@ -12,8 +12,6 @@ import org.workintech.entity.ImagesObj;
 import org.workintech.service.ImagesObjService;
 import org.workintech.service.ProductService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
