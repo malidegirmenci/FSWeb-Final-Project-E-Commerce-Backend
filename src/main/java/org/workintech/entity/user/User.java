@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +37,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Size(min = 10, max = 2048, message = "Token must not be less than 10 and greater than 2048 characters.")
     @Column(name = "token")
     private String token;
 
@@ -60,6 +59,8 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name ="payment_id"))
     private Set<Payment> payments = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
