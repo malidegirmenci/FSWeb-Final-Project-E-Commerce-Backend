@@ -9,10 +9,7 @@ import org.workintech.entity.Category;
 import org.workintech.entity.ImagesObj;
 import org.workintech.entity.Product;
 import org.workintech.entity.Store;
-import org.workintech.entity.user.Address;
-import org.workintech.entity.user.Payment;
-import org.workintech.entity.user.Role;
-import org.workintech.entity.user.User;
+import org.workintech.entity.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,5 +163,25 @@ public class DtoConverter {
         )));
         return responses;
     }
+
+    public static List<CartItemResponse> convertToCartItemResponseList(List<CartItem> cartItems){
+        List<CartItemResponse> responses = new ArrayList<>();
+        cartItems.forEach(cartItem -> responses.add(new CartItemResponse(
+                cartItem.getId(),
+                DtoConverter.convertToProductResponse(cartItem.getProduct()),
+                cartItem.getQuantity(),
+                cartItem.getIsChecked()
+        )));
+        return responses;
+    }
+
+    public static  CartItemResponse convertToCartItemResponse(CartItem cartItem){
+        return new CartItemResponse(
+                cartItem.getId(),
+                DtoConverter.convertToProductResponse(cartItem.getProduct()),
+                cartItem.getQuantity(),
+                cartItem.getIsChecked());
+    }
+
 }
 
