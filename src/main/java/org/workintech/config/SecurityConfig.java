@@ -109,6 +109,7 @@ public class SecurityConfig {
 
                     auth.requestMatchers("/address/**").hasAnyRole("admin","store","customer");
                     auth.requestMatchers("/payment/**").hasAnyRole("admin","store","customer");
+                    auth.requestMatchers("/cart/**").permitAll();
 
                     auth.requestMatchers("/signup/**").permitAll();
                     auth.requestMatchers("/login/**").permitAll();
