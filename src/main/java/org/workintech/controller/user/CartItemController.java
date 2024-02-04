@@ -19,8 +19,18 @@ public class CartItemController {
         return cartService.getUserCartItems(token);
     }
     @PostMapping("/{token}")
-    public CartItemResponse addToCart(@PathVariable String token, @RequestBody CartItemRequest cartItemRequest){
-        return DtoConverter.convertToCartItemResponse(cartService.addToCart(token, cartItemRequest.productId(), cartItemRequest.quantity(), cartItemRequest.isChecked()));
+    public CartItemResponse saveToCart(@PathVariable String token, @RequestBody CartItemRequest cartItemRequest){
+        return DtoConverter.convertToCartItemResponse(cartService.saveToCart(token, cartItemRequest.productId(), cartItemRequest.quantity(), cartItemRequest.isChecked()));
+    }
+    @PutMapping("/{id}/quantity/{isAdding}")
+    public String updateQuantity(@PathVariable Long id, @PathVariable Boolean isAdding){
+        cartService.updateQuantity(id,isAdding);
+        return "Quantity has been updated";
+    }
+    @PutMapping("/{id}/checkCartItem/{isChecked}")
+    public String updateIsChecked(@PathVariable Long id, @PathVariable Boolean isChecked){
+        cartService.updateIsChecked(id,isChecked);
+        return "Checked has been updated";
     }
     @DeleteMapping("/{token}/{cartItemId}")
     public String removeFromCart(@PathVariable String token, @PathVariable Long cartItemId){
