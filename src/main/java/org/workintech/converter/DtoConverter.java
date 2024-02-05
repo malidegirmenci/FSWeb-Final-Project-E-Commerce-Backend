@@ -100,10 +100,6 @@ public class DtoConverter {
         return responses;
     }
 
-    public static ImagesObjResponse convertToImagesObjResponse(ImagesObj imagesObj) {
-        return new ImagesObjResponse(imagesObj.getUrl(), imagesObj.getIndex());
-    }
-
     public static RegisterUserResponse convertToRegisterUserResponse(String message) {
         return new RegisterUserResponse(message);
     }
@@ -122,6 +118,7 @@ public class DtoConverter {
 
     public static AddressResponse convertToAddressResponse(Address address) {
         return new AddressResponse(
+                address.getId(),
                 address.getAddressTitle(),
                 address.getName(),
                 address.getSurname(),
@@ -136,6 +133,7 @@ public class DtoConverter {
     public static List<AddressResponse> convertToAddressResponseList(List<Address> addresses) {
         List<AddressResponse> responses = new ArrayList<>();
         addresses.forEach(address -> responses.add(new AddressResponse(
+                address.getId(),
                 address.getAddressTitle(),
                 address.getName(),
                 address.getSurname(),
@@ -149,12 +147,21 @@ public class DtoConverter {
     }
 
     public static PaymentResponse convertToPaymentResponse(Payment payment){
-        return new PaymentResponse(payment.getNumber(), payment.getName(), payment.getExpiryMonth(), payment.getExpiryYear(), payment.getCvc());
+        return new PaymentResponse(
+                payment.getId(),
+                payment.getTitle(),
+                payment.getNumber(),
+                payment.getName(),
+                payment.getExpiryMonth(),
+                payment.getExpiryYear(),
+                payment.getCvc());
     }
 
     public static List<PaymentResponse> convertToPaymentResponseList(List<Payment> payments){
         List<PaymentResponse> responses = new ArrayList<>();
         payments.forEach(payment -> responses.add(new PaymentResponse(
+                payment.getId(),
+                payment.getTitle(),
                 payment.getNumber(),
                 payment.getName(),
                 payment.getExpiryMonth(),
@@ -183,5 +190,23 @@ public class DtoConverter {
                 cartItem.getIsChecked());
     }
 
+    public static OrderResponse convertToOrderResponse(Order order){
+        return new OrderResponse(
+                convertToAddressResponse(order.getAddress()),
+                order.getPrice(),
+                order.getDate(),
+                convertToCartItemResponseList(order.getCartItems())
+        );
+    }
+    public static List<OrderResponse> converToOrderResponseList(List<Order> orders){
+        List<OrderResponse> responses = new ArrayList<>();
+        orders.forEach(order -> responses.add(new OrderResponse(
+                convertToAddressResponse(order.getAddress()),
+                order.getPrice(),
+                order.getDate(),
+                convertToCartItemResponseList(order.getCartItems())
+        )));
+        return responses;
+    }
 }
 
