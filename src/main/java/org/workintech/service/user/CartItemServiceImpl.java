@@ -18,24 +18,26 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class CartService {
+public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-    public List<CartItemResponse> getUserCartItems(String token){
+
+    public List<CartItemResponse> getUserCartItems(String token) {
         Optional<User> user = userRepository.findUserByToken(token);
         List<CartItem> cartItems = cartItemRepository.findByUserId(user.orElseThrow().getId());
         return DtoConverter.convertToCartItemResponseList(cartItems);
     }
-    public CartItem saveToCart(String token, Long productId, int quantity, Boolean isChecked){
+
+    public CartItem saveToCart(String token, Long productId, int quantity, Boolean isChecked) {
         User user = userRepository.findUserByToken(token).orElseThrow(() -> new EcommerceException("The user with given token could not find!", HttpStatus.UNAUTHORIZED));
-        Product product = productRepository.findById(productId).orElseThrow(() -> new EcommerceException("The product with given id could not find",HttpStatus.NOT_FOUND));
+        Product product = productRepository.findById(productId).orElseThrow(() -> new EcommerceException("The product with given id could not find", HttpStatus.NOT_FOUND));
         Optional<CartItem> existingCartItem = cartItemRepository.findByUserIdAndProductId(user.getId(), product.getId());
         CartItem cartItem;
-        if(existingCartItem.isPresent()){
+        if (existingCartItem.isPresent()) {
             cartItem = existingCartItem.get();
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
-        }else{
+        } else {
             cartItem = new CartItem();
             cartItem.setUser(user);
             cartItem.setProduct(product);
@@ -44,20 +46,23 @@ public class CartService {
         cartItem.setIsChecked(isChecked);
         return cartItemRepository.save(cartItem);
     }
-    public void updateQuantity(Long id, boolean isAdding){
-        CartItem cartItem = cartItemRepository.findById(id).orElseThrow(() -> new EcommerceException("The cart item with given id could not find!",HttpStatus.NOT_FOUND));
-        if(isAdding){
-          cartItem.setQuantity(cartItem.getQuantity() + 1);
-        }else{
+
+    public void updateQuantity(Long id, boolean isAdding) {
+        CartItem cartItem = cartItemRepository.findById(id).orElseThrow(() -> new EcommerceException("The cart item with given id could not find!", HttpStatus.NOT_FOUND));
+        if (isAdding) {
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+        } else {
             cartItem.setQuantity(cartItem.getQuantity() - 1);
         }
         cartItemRepository.save(cartItem);
     }
-    public void updateIsChecked(Long id, boolean isChecked){
-        CartItem cartItem = cartItemRepository.findById(id).orElseThrow(() -> new EcommerceException("The cart item with given id could not find!",HttpStatus.NOT_FOUND));
+
+    public void updateIsChecked(Long id, boolean isChecked) {
+        CartItem cartItem = cartItemRepository.findById(id).orElseThrow(() -> new EcommerceException("The cart item with given id could not find!", HttpStatus.NOT_FOUND));
         cartItem.setIsChecked(isChecked);
         cartItemRepository.save(cartItem);
     }
+
     public void removeFromCart(String userToken, Long cartItemId) {
         userRepository.findUserByToken(userToken).orElseThrow(() -> new EcommerceException("The user with given token could not find!", HttpStatus.UNAUTHORIZED));
         cartItemRepository.deleteById(cartItemId);
