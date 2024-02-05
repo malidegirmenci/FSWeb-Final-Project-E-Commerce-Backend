@@ -16,6 +16,9 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column (name = "title")
+    private String title;
+
     @Column(name = "number")
     private String number;
 
