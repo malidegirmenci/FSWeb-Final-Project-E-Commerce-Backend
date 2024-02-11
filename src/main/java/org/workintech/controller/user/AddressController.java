@@ -1,6 +1,7 @@
 package org.workintech.controller.user;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -29,4 +30,8 @@ public class AddressController {
         return addressService.getByUserToken(token);
     }
 
+    @DeleteMapping("/{token}/{addressId}")
+    public String delete(@NotBlank @PathVariable String token, @NotNull @PathVariable Long addressId){
+        return addressService.delete(token,addressId);
+    }
 }
