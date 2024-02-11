@@ -40,10 +40,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResponse delete(Long id) {
-        Address willDeleteAddress = findById(id);
-        addressRepository.delete(willDeleteAddress);
-        return DtoConverter.convertToAddressResponse(willDeleteAddress);
+    public String delete(String token, Long addressId) {
+        User user = userRepository.findUserByToken(token).orElseThrow(()->new EcommerceException("The user with given id could not find!",HttpStatus.UNAUTHORIZED));
+        Address address = findById(addressId);
+        user.getAddresses().remove(address);
+        addressRepository.deleteById(addressId);
+        return "Address has been deleted";
     }
 
     @Override
