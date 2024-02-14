@@ -34,4 +34,13 @@ public class PaymentServiceImpl implements PaymentService{
         Optional<User> user = userRepository.findUserByToken(token);
         return DtoConverter.convertToPaymentResponseList(user.orElseThrow().getPayments().stream().toList());
     }
+
+    @Override
+    public String delete(Long id, String token) {
+        User user = userRepository.findUserByToken(token).orElseThrow(()->new EcommerceException("The user with given id could not find!",HttpStatus.UNAUTHORIZED));
+        Payment payment = paymentRepository.findById(id).orElseThrow(()->new EcommerceException("The card with given id could not find!",HttpStatus.NOT_FOUND));
+        user.getPayments().remove(payment);
+        paymentRepository.deleteById(id);
+        return "The Card deleted";
+    }
 }
