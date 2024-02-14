@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.workintech.dto.user.OrderRequest;
 import org.workintech.dto.user.OrderResponse;
+import org.workintech.service.user.CartItemService;
 import org.workintech.service.user.OrderService;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 public class OrderController {
     private OrderService orderService;
     @PostMapping("/{token}")
-    private String saveOrder(@PathVariable String token, @RequestBody OrderRequest orderRequest){
+    private OrderResponse saveOrder(@PathVariable String token, @RequestBody OrderRequest orderRequest){
         return orderService.saveOrder(token,orderRequest);
     }
 
