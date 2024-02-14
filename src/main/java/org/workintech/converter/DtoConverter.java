@@ -192,6 +192,7 @@ public class DtoConverter {
 
     public static OrderResponse convertToOrderResponse(Order order){
         return new OrderResponse(
+                order.getId(),
                 convertToAddressResponse(order.getAddress()),
                 order.getPrice(),
                 order.getDate(),
@@ -201,6 +202,7 @@ public class DtoConverter {
     public static List<OrderResponse> converToOrderResponseList(List<Order> orders){
         List<OrderResponse> responses = new ArrayList<>();
         orders.forEach(order -> responses.add(new OrderResponse(
+                order.getId(),
                 convertToAddressResponse(order.getAddress()),
                 order.getPrice(),
                 order.getDate(),
