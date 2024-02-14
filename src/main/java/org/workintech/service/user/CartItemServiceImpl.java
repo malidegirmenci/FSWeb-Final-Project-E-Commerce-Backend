@@ -63,8 +63,10 @@ public class CartItemServiceImpl implements CartItemService {
         cartItemRepository.save(cartItem);
     }
 
-    public void removeFromCart(String userToken, Long cartItemId) {
-        userRepository.findUserByToken(userToken).orElseThrow(() -> new EcommerceException("The user with given token could not find!", HttpStatus.UNAUTHORIZED));
-        cartItemRepository.deleteById(cartItemId);
+    public void delete(String userToken, Long cartItemId) {
+        User user = userRepository.findUserByToken(userToken).orElseThrow(() -> new EcommerceException("The user with given token could not find!", HttpStatus.UNAUTHORIZED));
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new EcommerceException("The cart item with given token could not find!", HttpStatus.NOT_FOUND));
+        user.getCartItems().remove(cartItem);
+        cartItemRepository.delete(cartItem);
     }
 }

@@ -10,5 +10,5 @@ public interface CartItemService {
     CartItem saveToCart(String token, Long productId, int quantity, Boolean isChecked);
     void updateQuantity(Long id, boolean isAdding);
     void updateIsChecked(Long id, boolean isChecked);
-    void removeFromCart(String userToken, Long cartItemId);
+    void delete(String userToken, Long cartItemId);
 }
