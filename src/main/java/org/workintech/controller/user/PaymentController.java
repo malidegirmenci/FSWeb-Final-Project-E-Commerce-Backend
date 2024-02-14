@@ -26,4 +26,9 @@ public class PaymentController {
     public List<PaymentResponse> getAll(@NotBlank @PathVariable String token){
         return paymentService.getByUserToken(token);
     }
+
+    @DeleteMapping("/{token}/{id}")
+    public String delete(@NotBlank @PathVariable String token,@NotNull @PathVariable Long id){
+        return paymentService.delete(id,token);
+    }
 }
