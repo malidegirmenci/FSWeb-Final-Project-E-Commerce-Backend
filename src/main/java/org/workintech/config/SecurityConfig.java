@@ -36,7 +36,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.workintech.utils.RsaKeyProperty;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Data
 @Configuration
@@ -80,7 +79,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:9000/api/v1/ecommerce"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowedHeaders(Arrays.asList(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -92,6 +91,9 @@ public class SecurityConfig {
         httpSecurity.cors().configurationSource(corsConfigurationSource());
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
+
+                    auth.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**").permitAll();
+
                     auth.requestMatchers(HttpMethod.GET,"/products/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/product/**").hasAnyRole("admin","store");
                     auth.requestMatchers(HttpMethod.PUT, "/product/**").hasAnyRole("admin","store");
@@ -116,6 +118,8 @@ public class SecurityConfig {
                     auth.requestMatchers("/login/**").permitAll();
                     auth.requestMatchers("/verify/**").permitAll();
                     auth.requestMatchers("/user/**").permitAll();
+
+
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
