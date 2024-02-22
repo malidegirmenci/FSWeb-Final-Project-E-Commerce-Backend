@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService{
         List<CartItem> cartItems = new ArrayList<>();
         orderRequest.cart().forEach((cartItemResponse -> {
             CartItem cartItem = cartItemRepository.findById(cartItemResponse.id()).orElseThrow(()->new EcommerceException("The cart item with given token could not find",HttpStatus.NOT_FOUND));
+            cartItem.setIsActive(false);
             cartItems.add(cartItem);
         }));
         order.setCartItems(cartItems);
