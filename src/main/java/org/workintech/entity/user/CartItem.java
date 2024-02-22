@@ -29,4 +29,7 @@ public class CartItem {
 
     @Column(name = "is_checked")
     private Boolean isChecked;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
