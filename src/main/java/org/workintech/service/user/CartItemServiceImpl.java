@@ -39,14 +39,20 @@ public class CartItemServiceImpl implements CartItemService {
         Optional<CartItem> existingCartItem = cartItemRepository.findByUserIdAndProductId(user.getId(), product.getId());
         CartItem cartItem;
         if (existingCartItem.isPresent()) {
-            cartItem = existingCartItem.get();
-            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            if(existingCartItem.get().getIsActive()){
+                cartItem = existingCartItem.get();
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            }else{
+                cartItem = existingCartItem.get();
+                cartItem.setQuantity(quantity);
+            }
         } else {
             cartItem = new CartItem();
             cartItem.setUser(user);
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
         }
+        cartItem.setIsActive(true);
         cartItem.setIsChecked(isChecked);
         return cartItemRepository.save(cartItem);
     }
