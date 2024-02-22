@@ -59,7 +59,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name ="payment_id"))
     private Set<Payment> payments = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
