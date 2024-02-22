@@ -15,6 +15,7 @@ import org.workintech.repository.user.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -25,8 +26,11 @@ public class CartItemServiceImpl implements CartItemService {
 
     public List<CartItemResponse> getUserCartItems(String token) {
         Optional<User> user = userRepository.findUserByToken(token);
-        List<CartItem> cartItems = cartItemRepository.findByUserId(user.orElseThrow().getId());
-        return DtoConverter.convertToCartItemResponseList(cartItems);
+        List<CartItem> cartItemsInUser = cartItemRepository.findByUserId(user.orElseThrow().getId());
+        List<CartItem> activeCartItems = cartItemsInUser.stream()
+                .filter(CartItem::getIsActive) // Replace with the actual getter method
+                .collect(Collectors.toList());
+        return DtoConverter.convertToCartItemResponseList(activeCartItems);
     }
 
     public CartItem saveToCart(String token, Long productId, int quantity, Boolean isChecked) {
