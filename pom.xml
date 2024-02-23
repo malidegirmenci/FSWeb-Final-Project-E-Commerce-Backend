@@ -14,7 +14,7 @@
 	<name>FSWeb-Final-Project-E-Commerce-Backend</name>
 	<description>FSWeb-Final-Project-E-Commerce-Backend</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
