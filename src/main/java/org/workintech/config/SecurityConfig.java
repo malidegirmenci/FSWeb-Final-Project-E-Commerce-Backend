@@ -95,17 +95,17 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**").permitAll();
 
                     auth.requestMatchers(HttpMethod.GET,"/products/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/product/**").hasAnyRole("admin","store");
+                    auth.requestMatchers(HttpMethod.POST, "/product/**").permitAll();
                     auth.requestMatchers(HttpMethod.PUT, "/product/**").hasAnyRole("admin","store");
                     auth.requestMatchers(HttpMethod.DELETE, "/product/**").hasAnyRole("admin","store");
 
                     auth.requestMatchers(HttpMethod.GET,"/categories/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/categories/**").hasRole("admin");
+                    auth.requestMatchers(HttpMethod.POST, "/categories/**").permitAll();
                     auth.requestMatchers(HttpMethod.PUT, "/categories/**").hasRole("admin");
                     auth.requestMatchers(HttpMethod.DELETE, "/categories/**").hasRole("admin");
 
                     auth.requestMatchers(HttpMethod.GET,"/roles/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/roles/**").hasRole("admin");
+                    auth.requestMatchers(HttpMethod.POST, "/roles/**").permitAll();
                     auth.requestMatchers(HttpMethod.PUT, "/roles/**").hasRole("admin");
                     auth.requestMatchers(HttpMethod.DELETE, "/roles/**").hasRole("admin");
 
