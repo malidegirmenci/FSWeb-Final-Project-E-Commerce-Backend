@@ -95,9 +95,9 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**").permitAll();
 
                     auth.requestMatchers(HttpMethod.GET,"/products/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/product/**").permitAll();
-                    auth.requestMatchers(HttpMethod.PUT, "/product/**").hasAnyRole("admin","store");
-                    auth.requestMatchers(HttpMethod.DELETE, "/product/**").hasAnyRole("admin","store");
+                    auth.requestMatchers(HttpMethod.POST, "/products/**").permitAll();
+                    auth.requestMatchers(HttpMethod.PUT, "/products/**").hasAnyRole("admin","store");
+                    auth.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyRole("admin","store");
 
                     auth.requestMatchers(HttpMethod.GET,"/categories/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/categories/**").permitAll();
