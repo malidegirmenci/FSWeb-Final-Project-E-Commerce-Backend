@@ -36,6 +36,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.workintech.utils.RsaKeyProperty;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Data
 @Configuration
@@ -79,7 +80,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:9000/api/v1/ecommerce"));
+        corsConfiguration.setAllowedOrigins(List.of("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowedHeaders(Arrays.asList(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
