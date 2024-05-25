@@ -29,7 +29,7 @@ The project incorporates the following technologies and dependencies:
 
 To run the project locally, you can follow the steps below:
 
-1. Install Java 21.
+1. Install Java 17.
 2. Create a PostgreSQL database and set the connection details in the `application.properties` file.
 3. Open a terminal or command prompt in the project directory.
 4. Run the command `./mvnw spring-boot:run` to start the project.
