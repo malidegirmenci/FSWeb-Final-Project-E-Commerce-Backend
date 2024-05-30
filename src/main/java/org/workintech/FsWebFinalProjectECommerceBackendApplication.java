@@ -27,7 +27,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FsWebFinalProjectECommerceBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FsWebFinalProjectECommerceBackendApplication.class, args);
+		SpringApplication app = new SpringApplication(FsWebFinalProjectECommerceBackendApplication.class);
+		app.setAdditionalProfiles("dev");
+		app.run(args);
+		//SpringApplication.run(FsWebFinalProjectECommerceBackendApplication.class, args);
 	}
 
 }
