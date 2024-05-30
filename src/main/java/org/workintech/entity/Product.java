@@ -32,11 +32,11 @@ public class Product {
     @Column(name ="description")
     private String description;
 
-    @Min(value = 0,message = "Price must not be null less than 0")
+    @Min(value = 0,message = "Price must be 0 or greater than 0")
     @Column(name = "price")
     private Double price;
 
-    @Min(value = 0,message = "Price must not be null less than 0")
+    @Min(value = 0,message = "Rating must be 0 or greater than 0")
     @Column(name = "rating")
     private Double rating;
 
@@ -48,7 +48,7 @@ public class Product {
     @Column(name = "sell_count")
     private Integer sellCount;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ImagesObj> images;
 
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
