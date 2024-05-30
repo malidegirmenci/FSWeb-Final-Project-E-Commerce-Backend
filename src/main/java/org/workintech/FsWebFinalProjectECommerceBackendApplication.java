@@ -28,7 +28,8 @@ public class FsWebFinalProjectECommerceBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(FsWebFinalProjectECommerceBackendApplication.class);
-		app.setAdditionalProfiles("dev");
+		//app.setAdditionalProfiles("dev");
+		app.setAdditionalProfiles("prod");
 		app.run(args);
 		//SpringApplication.run(FsWebFinalProjectECommerceBackendApplication.class, args);
 	}
